@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:repolens/Widgets/gallery.dart';
+import 'package:repolens/Widgets/repo.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,8 +10,41 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    
+    Widget? content;
+    if (selectedIndex == 0) {
+       content = const Repo();
+    }
+    if (selectedIndex == 1) {
+      content = const Gallery();
+    }
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 10,
+        title: const Text('RepoLens'),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.storage),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.collections),
+            label: '',
+          ),
+        ],
+        currentIndex: selectedIndex,
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
+        },
+      ),
+      body: content,
+    );
   }
 }
