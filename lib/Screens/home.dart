@@ -11,12 +11,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var selectedIndex = 0;
+  Color mycolor = const Color(0xFF8BAAAD);
   @override
   Widget build(BuildContext context) {
-    
     Widget? content;
     if (selectedIndex == 0) {
-       content = const Repo();
+      content = const Repo();
     }
     if (selectedIndex == 1) {
       content = const Gallery();
@@ -25,8 +25,16 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         elevation: 10,
         title: const Text('RepoLens'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.bookmark_outline),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 10,
+        backgroundColor: mycolor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.storage),
