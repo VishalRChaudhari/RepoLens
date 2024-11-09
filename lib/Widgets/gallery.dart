@@ -33,14 +33,7 @@ class _GalleryState extends State<Gallery> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                List<String> bookmarks = prefs.getStringList('bookmarks') ?? [];
-                bookmarks.add(jsonEncode(imageUrl));
-                await prefs.setStringList('bookmarks', bookmarks);
-              },
-              icon: const Icon(Icons.bookmark))
+          IconButton(onPressed: () async {}, icon: const Icon(Icons.bookmark))
         ],
       ),
       body: Center(
