@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:repolens/Screens/home.dart';
+import 'package:repolens/Screens/spalshScreenn.dart';
 
 Color mycolor  = const Color(0xFF8BAAAD);
 final theme = ThemeData(
@@ -23,9 +23,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: theme,
-      home: const Home(),
+      home: const SplashScreenn(),
     );
   }
 }

@@ -12,6 +12,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var selectedIndex = 0;
   Color mycolor = const Color(0xFF8BAAAD);
+  
   @override
   Widget build(BuildContext context) {
     Widget? content;
@@ -19,7 +20,7 @@ class _HomeState extends State<Home> {
       content = const Repo();
     }
     if (selectedIndex == 1) {
-      content =  Gallery();
+      content = const Gallery();
     }
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +28,9 @@ class _HomeState extends State<Home> {
         title: const Text('RepoLens'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             icon: const Icon(Icons.bookmark_outline),
           ),
         ],

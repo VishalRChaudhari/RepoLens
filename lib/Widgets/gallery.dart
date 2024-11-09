@@ -40,7 +40,7 @@ class _GalleryState extends State<Gallery> {
                 bookmarks.add(jsonEncode(imageUrl));
                 await prefs.setStringList('bookmarks', bookmarks);
               },
-              icon: const Icon(Icons.bookmark_border))
+              icon: const Icon(Icons.bookmark))
         ],
       ),
       body: Center(
@@ -49,13 +49,6 @@ class _GalleryState extends State<Gallery> {
         ),
       ),
     );
-  }
-
-  void bookmarkImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> bookmarks = prefs.getStringList('bookmarks') ?? [];
-    bookmarks.add(jsonEncode(_photos));
-    await prefs.setStringList('bookmarks', bookmarks);
   }
 
   @override
