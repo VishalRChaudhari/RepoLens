@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
       content = const Repo();
     }
     if (selectedIndex == 1) {
-      content = const Gallery();
+      content =  Gallery();
     }
     return Scaffold(
       appBar: AppBar(
