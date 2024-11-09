@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:repolens/Screens/filedetailscreen.dart';
 import 'package:repolens/secrets.dart';
 
 class Repo extends StatelessWidget {
@@ -12,7 +13,7 @@ class Repo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- //   Color mycolor = const Color.fromARGB(255, 180, 208, 211);
+    //   Color mycolor = const Color.fromARGB(255, 180, 208, 211);
     return FutureBuilder(
       future: getRepos(),
       builder: (context, snapshot) {
@@ -32,23 +33,44 @@ class Repo extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
-                  title: Text(
-                    repo['description'] ?? 'No Description',
-                    style: const TextStyle(fontSize: 17),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        repo['name'] ?? "Unknown Repo",
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        "Comments: ${repo['comments']},  Created: ${repo['created_at']}",
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  )),
+                title: Text(
+                  repo['description'] ?? 'No Description',
+                  style: const TextStyle(fontSize: 17),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      repo['name'] ?? "Unknown Repo",
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    Text(
+                      "Comments: ${repo['comments']},  Created: ${repo['created_at']}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => FilesScreen(
+                              file: repo,
+                            ))),
+                onLongPress: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(repo['owner']['login']),
+                      content: Text("Type: ${repo['owner']['type']}"),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Close"))
+                      ],
+                    );
+                  },
+                ),
+              ),
             );
           },
         );

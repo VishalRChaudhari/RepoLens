@@ -2,18 +2,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:repolens/secrets.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Gallery extends StatefulWidget {
   const Gallery({super.key});
 
-  
-    @override
+  @override
   // ignore: library_private_types_in_public_api
   _GalleryState createState() => _GalleryState();
 }
 
 class _GalleryState extends State<Gallery> {
   late Future<List<dynamic>> _photos;
+
   Future<List<dynamic>> getPhotos(String query) async {
     final url = Uri.parse(
         'https://pixabay.com/api/?key=$imageKey&q=$query&image_type=photo&per_page=15');
@@ -30,13 +31,31 @@ class _GalleryState extends State<Gallery> {
 
   fullScreenImage(String imageUrl) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                List<String> bookmarks = prefs.getStringList('bookmarks') ?? [];
+                bookmarks.add(jsonEncode(imageUrl));
+                await prefs.setStringList('bookmarks', bookmarks);
+              },
+              icon: const Icon(Icons.bookmark_border))
+        ],
+      ),
       body: Center(
         child: InteractiveViewer(
           child: Image.network(imageUrl),
         ),
       ),
     );
+  }
+
+  void bookmarkImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> bookmarks = prefs.getStringList('bookmarks') ?? [];
+    bookmarks.add(jsonEncode(_photos));
+    await prefs.setStringList('bookmarks', bookmarks);
   }
 
   @override
@@ -61,7 +80,7 @@ class _GalleryState extends State<Gallery> {
             final photos = snapshot.data!;
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, 
+                crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),
@@ -80,7 +99,7 @@ class _GalleryState extends State<Gallery> {
                     );
                   },
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16), 
+                    borderRadius: BorderRadius.circular(16),
                     child: Image.network(
                       photo['webformatURL'],
                       fit: BoxFit.cover,
