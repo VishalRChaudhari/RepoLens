@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:repolens/Screens/Bookmarks.dart';
 import 'package:repolens/Widgets/gallery.dart';
 import 'package:repolens/Widgets/repo.dart';
 
@@ -12,7 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   var selectedIndex = 0;
   Color mycolor = const Color(0xFF8BAAAD);
-  
+
   @override
   Widget build(BuildContext context) {
     Widget? content;
@@ -29,7 +30,8 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
             onPressed: () {
-              
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (content) => const BookmarksScreen()));
             },
             icon: const Icon(Icons.bookmark_outline),
           ),
